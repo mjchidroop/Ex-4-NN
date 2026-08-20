@@ -646,47 +646,202 @@ print(f"  Predicted Class: {predicted_class}")
 ## Output
 
 ### Dataset Information
-- Dataset Shape: 13,611 samples, 17 features (16 features + 1 class label)
-- Classes: 7 bean varieties
-- Class Distribution: Seker (2,027), Barbunya (1,321), Bombay (522), Cali (1,631), Dermosan (3,547), Horoz (1,928), Sira (2,635)
+```py
+Loading dataset from: /content/drive/MyDrive/MLP_DryBean_Project/Dry_Bean_Dataset.xlsx
 
-### Custom MLP Performance
-- Architecture: 16 -> 32 -> 16 -> 7
-- Test Accuracy: ~0.93-0.95
-- Loss decreased from ~2.0 to ~0.15 over 1000 epochs
+======================================================================
+DRY BEAN DATASET - EXPLORATORY ANALYSIS
+======================================================================
+
+Dataset Shape: 13611 samples, 17 features
+
+Features: ['Area', 'Perimeter', 'MajorAxisLength', 'MinorAxisLength', 'AspectRation', 'Eccentricity', 'ConvexArea', 'EquivDiameter', 'Extent', 'Solidity', 'roundness', 'Compactness', 'ShapeFactor1', 'ShapeFactor2', 'ShapeFactor3', 'ShapeFactor4', 'Class']
+
+Class Distribution:
+  DERMASON:  3546 samples (26.05%)
+  SIRA:  2636 samples (19.37%)
+  SEKER:  2027 samples (14.89%)
+  HOROZ:  1928 samples (14.17%)
+  CALI:  1630 samples (11.98%)
+  BARBUNYA:  1322 samples ( 9.71%)
+  BOMBAY:   522 samples ( 3.84%)
+
+Statistical Summary:
+            Area  Perimeter  MajorAxisLength  MinorAxisLength  AspectRation  \
+count   13611.00   13611.00         13611.00         13611.00      13611.00   
+mean    53048.28     855.28           320.14           202.27          1.58   
+std     29324.10     214.29            85.69            44.97          0.25   
+min     20420.00     524.74           183.60           122.51          1.02   
+25%     36328.00     703.52           253.30           175.85          1.43   
+50%     44652.00     794.94           296.88           192.43          1.55   
+75%     61332.00     977.21           376.50           217.03          1.71   
+max    254616.00    1985.37           738.86           460.20          2.43   
+
+       Eccentricity  ConvexArea  EquivDiameter    Extent  Solidity  roundness  \
+count      13611.00    13611.00       13611.00  13611.00  13611.00   13611.00   
+mean           0.75    53768.20         253.06      0.75      0.99       0.87   
+std            0.09    29774.92          59.18      0.05      0.00       0.06   
+min            0.22    20684.00         161.24      0.56      0.92       0.49   
+25%            0.72    36714.50         215.07      0.72      0.99       0.83   
+50%            0.76    45178.00         238.44      0.76      0.99       0.88   
+75%            0.81    62294.00         279.45      0.79      0.99       0.92   
+max            0.91   263261.00         569.37      0.87      0.99       0.99   
+
+       Compactness  ShapeFactor1  ShapeFactor2  ShapeFactor3  ShapeFactor4  
+count     13611.00      13611.00       13611.0      13611.00      13611.00  
+mean          0.80          0.01           0.0          0.64          1.00  
+std           0.06          0.00           0.0          0.10          0.00  
+min           0.64          0.00           0.0          0.41          0.95  
+25%           0.76          0.01           0.0          0.58          0.99  
+50%           0.80          0.01           0.0          0.64          1.00  
+75%           0.83          0.01           0.0          0.70          1.00  
+max           0.99          0.01           0.0          0.97          1.00  
+```
+> <img width="1491" height="989" alt="image" src="https://github.com/user-attachments/assets/fd9a90b0-7d0a-4b77-b345-6fd299831d46" />
+
+
+### Custom MLP Training:
+```py
+ 
+======================================================================
+CUSTOM MLP TRAINING
+======================================================================
+Training MLP from scratch...
+  Epoch 100/1000, Loss: 1.091296
+  Epoch 200/1000, Loss: 0.796343
+  Epoch 300/1000, Loss: 0.646293
+  Epoch 400/1000, Loss: 0.547063
+  Epoch 500/1000, Loss: 0.475545
+  Epoch 600/1000, Loss: 0.422735
+  Epoch 700/1000, Loss: 0.383408
+  Epoch 800/1000, Loss: 0.353790
+  Epoch 900/1000, Loss: 0.330992
+  Epoch 1000/1000, Loss: 0.313116
+Training complete.
+```
+### Custom MLP training loss over epochs:
+
+<img width="850" height="552" alt="image" src="https://github.com/user-attachments/assets/b04150a0-2227-4b69-a5eb-0d498e7271c2" />
+
+### Custom MLP Performance:
+```py
+ 
+======================================================================
+CUSTOM MLP PERFORMANCE
+======================================================================
+
+Test Accuracy: 0.9053 (90.53%)
+
+Classification Report:
+              precision    recall  f1-score   support
+
+    BARBUNYA       0.97      0.85      0.91       265
+      BOMBAY       1.00      0.98      0.99       104
+        CALI       0.90      0.95      0.93       326
+    DERMASON       0.89      0.92      0.91       709
+       HOROZ       0.92      0.96      0.94       386
+       SEKER       0.93      0.93      0.93       406
+        SIRA       0.84      0.81      0.82       527
+
+    accuracy                           0.91      2723
+   macro avg       0.92      0.91      0.92      2723
+weighted avg       0.91      0.91      0.90      2723
+
+```
+
+### Custom MLP Confusion Matrix:
+
+<img width="792" height="759" alt="image" src="https://github.com/user-attachments/assets/ab317a68-6d2c-494a-aaa6-8b25ee8158eb" />
+
 
 ### Scikit-learn MLP Performance
-- Best Architecture: Three hidden layers (20-15-10)
-- Best Accuracy: ~0.94-0.96
-- All architectures achieved >90% accuracy
+```py
+ 
+======================================================================
+BEST PERFORMING MLP - DETAILED EVALUATION
+======================================================================
+
+Architecture: Two hidden layers: 100-50
+Accuracy: 0.9277 (92.77%)
+
+Classification Report:
+              precision    recall  f1-score   support
+
+    BARBUNYA       0.93      0.91      0.92       265
+      BOMBAY       1.00      1.00      1.00       104
+        CALI       0.94      0.94      0.94       326
+    DERMASON       0.93      0.92      0.92       709
+       HOROZ       0.96      0.96      0.96       386
+       SEKER       0.94      0.96      0.95       406
+        SIRA       0.87      0.88      0.88       527
+
+    accuracy                           0.93      2723
+   macro avg       0.94      0.94      0.94      2723
+weighted avg       0.93      0.93      0.93      2723
+
+
+Best model saved to: /content/drive/MyDrive/MLP_DryBean_Project/best_mlp_model.pkl
+```
+
+<img width="792" height="781" alt="image" src="https://github.com/user-attachments/assets/c2052c63-3983-4c01-a8a1-b81992b660a9" />
+
 
 ### Feature Importance
-Top features identified:
-1. Area
-2. Perimeter
-3. MajorAxisLength
-4. ConvexArea
-5. EquivDiameter
+```py
+ 
+======================================================================
+FEATURE IMPORTANCE ANALYSIS
+======================================================================
+
+Top 10 Most Important Features:
+         Feature  Importance
+10     roundness    0.194427
+12  ShapeFactor1    0.163747
+15  ShapeFactor4    0.161255
+4   AspectRation    0.145262
+11   Compactness    0.140818
+6     ConvexArea    0.138846
+5   Eccentricity    0.138650
+0           Area    0.138050
+9       Solidity    0.132525
+8         Extent    0.131864
+```
+<img width="1055" height="706" alt="image" src="https://github.com/user-attachments/assets/46b3ab60-68e9-4a25-b008-72c30dac57c6" />
+
+
 
 ### PCA Visualization
-- First two principal components explained ~85% of variance
-- Clear separation between different bean varieties visible
 
-### Confusion Matrix Results
-- Most classes correctly classified with high accuracy
-- Minor confusion between similar-looking bean varieties (e.g., Seker and Cali)
+```py
+Explained Variance Ratio:
+  PC1: 0.5545
+  PC2: 0.2646
+  Total: 0.8192
+```
+
+<img width="933" height="706" alt="image" src="https://github.com/user-attachments/assets/d212d1d4-8008-4138-8a9c-75780a1fc725" />
+
 
 ### Model Comparison
-| Architecture | Accuracy |
-|--------------|----------|
-| 20-15-10 | 0.9523 |
-| 100-50 | 0.9511 |
-| 10-10-10 | 0.9498 |
-| 50-20 | 0.9485 |
-| 100 | 0.9472 |
-| 50 | 0.9459 |
-| 10 | 0.9435 |
-| 10-10 | 0.9412 |
+```py
+ 
+======================================================================
+MODEL COMPARISON RESULTS
+======================================================================
+
+Accuracy Comparison:
+                    architecture  accuracy
+       Two hidden layers: 100-50  0.927653
+   Three hidden layers: 20-15-10  0.926552
+ Single hidden layer: 50 neurons  0.925450
+Single hidden layer: 100 neurons  0.924715
+        Two hidden layers: 50-20  0.924348
+        Two hidden layers: 10-10  0.922879
+ Single hidden layer: 10 neurons  0.921777
+   Three hidden layers: 10-10-10  0.919941
+```
+<img width="1189" height="590" alt="image" src="https://github.com/user-attachments/assets/9079a242-9c45-4a02-8c26-aa5181b67cbd" />
+
 
 ## Result
 
